@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Button, Pressable, View, Text } from "react-native";
 
 export default function Index() {
   return (
@@ -9,10 +9,18 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-   // ...existing code...
-      <Text>Welcome to My App!</Text>
-      <Text>Changes you make will automatically reload.</Text>
-// ...existing code...
+      <Button title="Press Me" onPress={() => alert("Button Pressed!")} />
+      <Pressable onPress={() => alert("Pressable Pressed!")}>
+        <View
+          style={{
+            padding: 12,
+            backgroundColor: "orange",
+            borderRadius: 8,
+          }}
+        >
+          <Text>Pressable Component</Text>
+        </View>
+      </Pressable>
     </View>
   );
 }
