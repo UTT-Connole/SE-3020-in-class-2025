@@ -1,13 +1,51 @@
 import { Text, View, Button, Pressable} from "react-native";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import GreenText from "../components/GreenText";
 import Entypo from '@expo/vector-icons/Entypo';
 import { Link } from 'expo-router';
 
+import { unlockAsync,addOrientationChangeListener,removeOrientationChangeListener, Orientation } from "expo-screen-orientation";
+
+
+let brokenCount = 0
 
 export default function Index() {
 
-  const alertMe = () => alert("Hello from alertMe!");
+  const [count, setCount] = useState(0);
+  const [orientation, setOrientation] = useState(Orientation.PORTRAIT_UP);
+
+  const updateCount = () => {
+    console.log(brokenCount)
+    brokenCount++;
+    console.log(brokenCount)
+    setCount(count + 1);
+    console.log("update count")
+  }
+
+  useEffect(() => {
+    console.log("Component mounted");
+    unlockAsync();
+
+    const subscription = addOrientationChangeListener((event) => {
+      console.log(event)
+      console.log("Orientation changed");
+      setOrientation(event.orientationInfo.orientation);
+
+    });
+
+    return () => {
+      console.log("Component unmounted");
+      removeOrientationChangeListener(subscription);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("count changed")
+  }, [count]);
+
+  if (count > 15) {
+    console.log("Count exceeded 15");
+  }
 
   return (
     <View
@@ -17,6 +55,16 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      <Text>Broken Count: {brokenCount} </Text>
+      <Text>Count: {count} </Text>
+      <Text>Orientation {orientation} </Text>
+
+
+      {count > 10 && <Text>Count is greater than 10</Text>}
+
+      <Button title="Increment" onPress={() => updateCount()} />
+
+
       <GreenText text="Blue" altColor="blue"/>
       <Text>Hello Picklers</Text>
       <Text style={{color: 'green', fontWeight: 'bold'}}>
@@ -24,9 +72,20 @@ export default function Index() {
       </Text>
       <Button title="Press me"/>
 
-      <Link href="/picklers" asChild>
+      <Link href="/picklers?count=5" asChild>
         <Pressable>
-        <Text>Picklers</Text>
+        <Text>Picklers Count 5</Text>
+        </Pressable>
+      </Link>
+      <Link href="/picklers?answer=42" asChild>
+        <Pressable>
+        <Text>Picklers Answer 42</Text>
+        </Pressable>
+      </Link>
+
+      <Link href="/tennis/tenissers" asChild>
+        <Pressable>
+        <Text>Tennis Players</Text>
         </Pressable>
       </Link>
 
