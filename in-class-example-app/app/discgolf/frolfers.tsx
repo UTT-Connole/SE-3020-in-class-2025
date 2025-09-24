@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, Text } from "react-native";
-import { ThemeProvider, useTheme } from "../../contexts/ThemeContext";
 
 import CoolButton from "../../components/CoolButton";
 import FrolferMain from "@/components/FrolferMain";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const FrolfersContent = () => {
   const { theme, setTheme } = useTheme();
@@ -36,11 +36,7 @@ const FrolfersContent = () => {
 };
 
 const Frolfers = () => {
-  return (
-    <ThemeProvider initialTheme="green">
-      <FrolfersContent />
-    </ThemeProvider>
-  );
+  return <FrolfersContent />;
 };
 
 const styles = StyleSheet.create({
