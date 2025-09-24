@@ -2,14 +2,19 @@
 import { Text, StyleSheet, Image } from 'react-native';
 import CoolButton from '../components/CoolButton';
 
+import {useTheme} from '@/contexts/themeContext';
+
 const frolfImage = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'; // Example image
 const FrolferMain = (
-    { theme, coolButtonOnPress }: { theme: string, coolButtonOnPress: () => void }
+    { coolButtonOnPress }: { coolButtonOnPress: () => void }
 ) => {
+
+    const { contextTheme } = useTheme();
 
     return (
         <>
 
+            <Text style={{color: contextTheme}}>Your current theme is: {contextTheme} </Text>
             <Image source={{ uri: frolfImage }} style={styles.image} />
             <Text style={styles.subtitle}>Welcome to the world of Disc Golf!</Text>
             <Text style={styles.text}>
@@ -22,7 +27,7 @@ const FrolferMain = (
                 - Affordable and accessible{'\n'}
                 - Fun for all ages!
             </Text>
-            <CoolButton theme={theme} onPress={coolButtonOnPress} />
+            <CoolButton onPress={coolButtonOnPress} />
             <Text style={styles.sectionTitle}>Getting Started</Text>
             <Text style={styles.text}>
                 All you need is a disc and a local course. Grab some friends and start frolfing today!

@@ -2,21 +2,25 @@ import { Pressable,Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { useState } from 'react';
 import CoolButton from '../../components/CoolButton';
 import FrolferMain from '@/components/FrolferMain';
+import  { useTheme} from '@/contexts/themeContext';
 
-const frolfImage = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'; // Example image
 
 const Frolfers = () => {
 
-    const [theme, setTheme] = useState('green') 
+    const { contextTheme, changeTheme } = useTheme();
+
     return (
+
         <ScrollView contentContainerStyle={styles.container}>
              <Text style={styles.title}>Frolfers</Text>
+             <Text style={{color: contextTheme}}>Your current theme is: {contextTheme} </Text>
 
-             <CoolButton theme={theme} onPress={() => {setTheme('green')}}/>
-             <CoolButton theme={theme} onPress={() => {setTheme('blue')}}/>
-             <CoolButton theme={theme} onPress={() => {setTheme('red')}}/>
 
-        <FrolferMain theme={theme} coolButtonOnPress={() => setTheme('yellow')}/>
+             <CoolButton  onPress={() => {changeTheme('green')}}/>
+             <CoolButton  onPress={() => {changeTheme('blue')}}/>
+             <CoolButton  onPress={() => {changeTheme('red')}}/>
+
+        <FrolferMain coolButtonOnPress={() => changeTheme('yellow')}/>
 
         </ScrollView>
     );
