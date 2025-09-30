@@ -9,10 +9,11 @@ const Frolfers = () => {
 
     const { contextTheme, changeTheme } = useTheme();
 
+    const frolfersStyle = {...styles.title, color: contextTheme};
     return (
 
         <ScrollView contentContainerStyle={styles.container}>
-             <Text style={styles.title}>Frolfers</Text>
+             <Text style={frolfersStyle}>Frolfers</Text>
              <Text style={{color: contextTheme}}>Your current theme is: {contextTheme} </Text>
 
 
@@ -33,11 +34,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
+
         fontSize: 32,
         fontWeight: 'bold',
         marginVertical: 16,
-        color: '#2e7d32',
-
+        color: 'purple',
     },
 });
 export default Frolfers;
