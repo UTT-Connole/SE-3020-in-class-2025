@@ -63,6 +63,11 @@ export default function Index() {
         <Text>FROLFING</Text>
         </Pressable>
       </Link>
+      <Link href="/concerts/hozier" asChild>
+        <Pressable>
+        <Text>Hozier</Text>
+        </Pressable>
+      </Link>
 
 
       {count > 10 && <Text>Count is greater than 10</Text>}
