@@ -5,18 +5,47 @@ export default function App() {
   return (
     <View style={styles.container}>
       <SymbolView
-        name="airpods.chargingcase"
+        name="trash.circle"
+        style={styles.symbol}
+        type="monochrome"
+      />
+      <SymbolView
+        name="trash.circle"
+        style={styles.symbol}
+        type="palette"
+      />
+      <SymbolView
+        name="trash.circle.fill"
         style={styles.symbol}
         type="hierarchical"
       />
       <SymbolView
-        name="person.2.badge.gearshape"
+        name="trash.circle"
+        style={styles.symbol}
+        type="hierarchical"
+      />
+      <SymbolView
+        name="flame"
         style={styles.symbol}
         type="hierarchical"
         animationSpec={{
-          effect: { direction: "up", type: "bounce" },
+          effect: { direction: "up", type: "pulse" },
           repeating: true,
         }}
+      />
+      <SymbolView
+        name="car.top.door.front.left.and.front.right.and.rear.left.open.fill"
+        style={styles.symbol}
+        type="hierarchical"
+        animationSpec={{
+          effect: { direction: "up", type: "pulse" },
+          repeating: true,
+        }}
+      />
+      <SymbolView
+        name="trash"
+        style={styles.symbol}
+        type="multicolor"
       />
     </View>
   );
