@@ -1,78 +1,22 @@
-import { Button, Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
-import {
-  Orientation,
-  addOrientationChangeListener,
-  removeOrientationChangeListener,
-  unlockAsync,
-} from "expo-screen-orientation";
-import { useEffect, useState } from "react";
-
+import { Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import GreenText from "../components/GreenText";
 import { Link } from "expo-router";
-
-let brokenCount = 0;
+import HeaderSection from "../components/index/HeaderSection";
+import StatsSection from "../components/index/StatsSection";
+import useOrientation from "../hooks/orientation";
+import useCount from "../hooks/count";
+import SportsNavigationCard from "@/components/SportsNavigationCard";
 
 export default function Index() {
-  const [count, setCount] = useState(0);
-  const [orientation, setOrientation] = useState(Orientation.PORTRAIT_UP);
-
-  const updateCount = () => {
-    console.log(brokenCount);
-    brokenCount++;
-    console.log(brokenCount);
-    setCount(count + 1);
-    console.log("update count");
-  };
-
-  useEffect(() => {
-    console.log("Component mounted");
-    unlockAsync();
-
-    const subscription = addOrientationChangeListener((event) => {
-      console.log(event);
-      console.log("Orientation changed");
-      setOrientation(event.orientationInfo.orientation);
-    });
-
-    return () => {
-      console.log("Component unmounted");
-      removeOrientationChangeListener(subscription);
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log("count changed");
-  }, [count]);
-
-  if (count > 15) {
-    console.log("Count exceeded 15");
-  }
+  const { count, updateCount, brokenCount } = useCount();
+  const orientation = useOrientation();
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>🏆 Sports Hub</Text>
-        <Text style={styles.headerSubtitle}>Your Athletic Community</Text>
-      </View>
+      <HeaderSection />
 
       <ScrollView style={styles.scrollContent} contentContainerStyle={styles.scrollContainer}>
-        {/* Stats Section */}
-        <View style={styles.statsContainer}>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Broken Count</Text>
-            <Text style={styles.statValue}>{brokenCount}</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Count</Text>
-            <Text style={styles.statValue}>{count}</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Orientation</Text>
-            <Text style={styles.statValueSmall}>{orientation}</Text>
-          </View>
-        </View>
+        <StatsSection brokenCount={brokenCount} count={count} orientation={orientation} />
 
         {count > 10 && (
           <View style={styles.alertBanner}>
@@ -87,37 +31,31 @@ export default function Index() {
 
         {/* Sports Navigation Cards */}
         <Text style={styles.sectionTitle}>Explore Sports</Text>
-        
-        <Link href="/discgolf/frolfers" asChild>
-          <Pressable style={[styles.sportCard, styles.discGolfCard]}>
-            <Text style={styles.sportIcon}>🥏</Text>
-            <Text style={styles.sportTitle}>Disc Golf</Text>
-            <Text style={styles.sportSubtitle}>Frolfers Community</Text>
-            <Entypo name="chevron-right" size={24} color="white" style={styles.chevron} />
-          </Pressable>
-        </Link>
 
-        <Link href="/picklers?count=5" asChild>
-          <Pressable style={[styles.sportCard, styles.pickleballCard]}>
-            <Text style={styles.sportIcon}>🏓</Text>
-            <Text style={styles.sportTitle}>Pickleball</Text>
-            <Text style={styles.sportSubtitle}>Join the Picklers</Text>
-            <Entypo name="chevron-right" size={24} color="white" style={styles.chevron} />
-          </Pressable>
-        </Link>
 
-        <Link href="/tennis/tenissers" asChild>
-          <Pressable style={[styles.sportCard, styles.tennisCard]}>
-            <Text style={styles.sportIcon}>🎾</Text>
-            <Text style={styles.sportTitle}>Tennis</Text>
-            <Text style={styles.sportSubtitle}>Tennis Players</Text>
-            <Entypo name="chevron-right" size={24} color="white" style={styles.chevron} />
-          </Pressable>
-        </Link>
+        <SportsNavigationCard 
+          href='/discgolf/frolfers'
+          icon={'🥏'}
+          title="Disc Golf"
+          subtitle="Frolfers Community"
+        />
+        <SportsNavigationCard 
+          href='/picklers?count=5'
+          icon={'🏓'}
+          title="Pickleball"
+          subtitle="Join the Picklers"
+          />
+        <SportsNavigationCard 
+          href='/tennis/tenissers'
+          icon={'🎾'}
+          title="Tennis"
+          subtitle="Tennis Players"
+        />
+
 
         {/* Quick Links Section */}
         <Text style={styles.sectionTitle}>Quick Links</Text>
-        
+
         <View style={styles.quickLinksContainer}>
           <Link href="/concerts/hozier" asChild>
             <Pressable style={styles.quickLinkButton}>
@@ -142,11 +80,11 @@ export default function Index() {
         <View style={styles.aboutSection}>
           <Text style={styles.aboutTitle}>About Our Community</Text>
           <Text style={styles.aboutText}>
-            Welcome to the ultimate sports community app! Whether you're into pickleball, 
+            Welcome to the ultimate sports community app! Whether you're into pickleball,
             tennis, disc golf, or other activities, we bring athletes together.
           </Text>
           <Text style={styles.aboutText}>
-            Join friendly competitions, stay active, and be part of a welcoming community 
+            Join friendly competitions, stay active, and be part of a welcoming community
             of sports enthusiasts from all backgrounds.
           </Text>
         </View>
@@ -162,69 +100,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f7fa',
   },
-  header: {
-    backgroundColor: '#1e3a8a',
-    paddingTop: 60,
-    paddingBottom: 30,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 8,
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: '#93c5fd',
-    textAlign: 'center',
-    marginTop: 5,
-  },
   scrollContent: {
     flex: 1,
   },
   scrollContainer: {
     padding: 20,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-    gap: 10,
-  },
-  statCard: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 15,
-    borderRadius: 15,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#64748b',
-    marginBottom: 5,
-  },
-  statValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1e3a8a',
-  },
-  statValueSmall: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1e3a8a',
   },
   alertBanner: {
     backgroundColor: '#fef3c7',
@@ -252,7 +132,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   primaryButtonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -275,9 +155,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  discGolfCard: {
-    backgroundColor: '#059669',
-  },
   pickleballCard: {
     backgroundColor: '#dc2626',
   },
@@ -288,21 +165,21 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginRight: 15,
   },
+  sportTextContainer: {
+    flex: 1,
+  },
   sportTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
-    flex: 1,
+    color: 'black',
   },
   sportSubtitle: {
     fontSize: 14,
-    color: 'rgba(255,255,255,0.8)',
-    position: 'absolute',
-    left: 75,
-    bottom: 18,
+    color: 'black',
+    marginTop: 2,
   },
   chevron: {
-    marginLeft: 'auto',
+    marginLeft: 10,
   },
   quickLinksContainer: {
     flexDirection: 'row',
