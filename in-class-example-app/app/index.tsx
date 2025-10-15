@@ -1,4 +1,4 @@
-import { Button, Pressable, ScrollView, Text, View } from "react-native";
+import { Button, Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
 import {
   Orientation,
   addOrientationChangeListener,
@@ -50,117 +50,294 @@ export default function Index() {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Broken Count: {brokenCount} </Text>
-      <Text>Count: {count} </Text>
-      <Text>Orientation {orientation} </Text>
-      <Link href="/discgolf/frolfers" asChild>
-        <Pressable>
-          <Text>FROLFING</Text>
+    <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>🏆 Sports Hub</Text>
+        <Text style={styles.headerSubtitle}>Your Athletic Community</Text>
+      </View>
+
+      <ScrollView style={styles.scrollContent} contentContainerStyle={styles.scrollContainer}>
+        {/* Stats Section */}
+        <View style={styles.statsContainer}>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>Broken Count</Text>
+            <Text style={styles.statValue}>{brokenCount}</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>Count</Text>
+            <Text style={styles.statValue}>{count}</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statLabel}>Orientation</Text>
+            <Text style={styles.statValueSmall}>{orientation}</Text>
+          </View>
+        </View>
+
+        {count > 10 && (
+          <View style={styles.alertBanner}>
+            <Text style={styles.alertText}>🔥 Count milestone reached!</Text>
+          </View>
+        )}
+
+        {/* Main Action Button */}
+        <Pressable style={styles.primaryButton} onPress={() => updateCount()}>
+          <Text style={styles.primaryButtonText}>⚡ Increment Counter</Text>
         </Pressable>
-      </Link>
-      <Link href="/concerts/hozier" asChild>
-        <Pressable>
-        <Text>Hozier</Text>
-        </Pressable>
-      </Link>
 
-      <Link href="/sf-symbols/sf" asChild>
-        <Pressable>
-          <Text>SF Symbols</Text>
-        </Pressable>
-      </Link>
-
-      {count > 10 && <Text>Count is greater than 10</Text>}
-
-      <Button title="Increment" onPress={() => updateCount()} />
-
-      <GreenText text="Blue" altColor="blue" />
-      <Text>Hello Picklers</Text>
-      <Text style={{ color: "green", fontWeight: "bold" }}>
-        Yes, we're really called that
-      </Text>
-      <Button title="Press me" />
-
-      <ScrollView>
-        <Link href="/picklers?count=5" asChild>
-          <Pressable>
-            <Text>Picklers Count 5</Text>
+        {/* Sports Navigation Cards */}
+        <Text style={styles.sectionTitle}>Explore Sports</Text>
+        
+        <Link href="/discgolf/frolfers" asChild>
+          <Pressable style={[styles.sportCard, styles.discGolfCard]}>
+            <Text style={styles.sportIcon}>🥏</Text>
+            <Text style={styles.sportTitle}>Disc Golf</Text>
+            <Text style={styles.sportSubtitle}>Frolfers Community</Text>
+            <Entypo name="chevron-right" size={24} color="white" style={styles.chevron} />
           </Pressable>
         </Link>
-        <Link href="/picklers?answer=42" asChild>
-          <Pressable>
-            <Text>Picklers Answer 42</Text>
+
+        <Link href="/picklers?count=5" asChild>
+          <Pressable style={[styles.sportCard, styles.pickleballCard]}>
+            <Text style={styles.sportIcon}>🏓</Text>
+            <Text style={styles.sportTitle}>Pickleball</Text>
+            <Text style={styles.sportSubtitle}>Join the Picklers</Text>
+            <Entypo name="chevron-right" size={24} color="white" style={styles.chevron} />
           </Pressable>
         </Link>
 
         <Link href="/tennis/tenissers" asChild>
-          <Pressable>
-            <Text>Tennis Players</Text>
+          <Pressable style={[styles.sportCard, styles.tennisCard]}>
+            <Text style={styles.sportIcon}>🎾</Text>
+            <Text style={styles.sportTitle}>Tennis</Text>
+            <Text style={styles.sportSubtitle}>Tennis Players</Text>
+            <Entypo name="chevron-right" size={24} color="white" style={styles.chevron} />
           </Pressable>
         </Link>
 
-        <Pressable onPress={() => alert("Alerted")}>
-          <Text>Pressable Child</Text>
-          <Entypo name="chevron-right" size={24} color="black" />
-        </Pressable>
+        {/* Quick Links Section */}
+        <Text style={styles.sectionTitle}>Quick Links</Text>
+        
+        <View style={styles.quickLinksContainer}>
+          <Link href="/concerts/hozier" asChild>
+            <Pressable style={styles.quickLinkButton}>
+              <Text style={styles.quickLinkText}>🎵 Hozier</Text>
+            </Pressable>
+          </Link>
 
-        <GreenText altColor="yellow" text="boring" />
-        <GreenText> This is a child node </GreenText>
-        <GreenText>
-          <View>
-            <Text>grandchild node</Text>
-          </View>
-          <Text> This is a child node </Text>
-        </GreenText>
-        <GreenText />
-        <Text style={{ marginTop: 10 }}>
-          Picklers are people who love playing pickleball, a fun and fast-paced
-          sport.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Pickleball combines elements of tennis, badminton, and ping-pong.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Picklers enjoy friendly competition, staying active, and being part of
-          a welcoming community.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec
-          dictum urna erat ut erat. Suspendisse potenti. Etiam euismod, urna eu
-          tincidunt consectetur, nisi nisl aliquam enim, nec dictum urna erat ut
-          erat.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-          fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
-          sequi nesciunt.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-          consectetur, adipisci velit, sed quia non numquam eius modi tempora
-          incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-        </Text>
-        <Text style={{ marginTop: 10 }}>
-          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-          autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
-          nihil molestiae consequatur.
-        </Text>
+          <Link href="/sf-symbols/sf" asChild>
+            <Pressable style={styles.quickLinkButton}>
+              <Text style={styles.quickLinkText}>📱 SF Symbols</Text>
+            </Pressable>
+          </Link>
+
+          <Link href="/picklers?answer=42" asChild>
+            <Pressable style={styles.quickLinkButton}>
+              <Text style={styles.quickLinkText}>❓ Answer 42</Text>
+            </Pressable>
+          </Link>
+        </View>
+
+        {/* About Section */}
+        <View style={styles.aboutSection}>
+          <Text style={styles.aboutTitle}>About Our Community</Text>
+          <Text style={styles.aboutText}>
+            Welcome to the ultimate sports community app! Whether you're into pickleball, 
+            tennis, disc golf, or other activities, we bring athletes together.
+          </Text>
+          <Text style={styles.aboutText}>
+            Join friendly competitions, stay active, and be part of a welcoming community 
+            of sports enthusiasts from all backgrounds.
+          </Text>
+        </View>
+
+        <View style={{ height: 40 }} />
       </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f7fa',
+  },
+  header: {
+    backgroundColor: '#1e3a8a',
+    paddingTop: 60,
+    paddingBottom: 30,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  },
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: '#93c5fd',
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  scrollContent: {
+    flex: 1,
+  },
+  scrollContainer: {
+    padding: 20,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    gap: 10,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 15,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#64748b',
+    marginBottom: 5,
+  },
+  statValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+  },
+  statValueSmall: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1e3a8a',
+  },
+  alertBanner: {
+    backgroundColor: '#fef3c7',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: '#f59e0b',
+  },
+  alertText: {
+    color: '#92400e',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  primaryButton: {
+    backgroundColor: '#1e3a8a',
+    padding: 18,
+    borderRadius: 15,
+    alignItems: 'center',
+    marginBottom: 30,
+    shadowColor: '#1e3a8a',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  primaryButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#1e293b',
+    marginBottom: 15,
+    marginTop: 10,
+  },
+  sportCard: {
+    padding: 20,
+    borderRadius: 15,
+    marginBottom: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  discGolfCard: {
+    backgroundColor: '#059669',
+  },
+  pickleballCard: {
+    backgroundColor: '#dc2626',
+  },
+  tennisCard: {
+    backgroundColor: '#7c3aed',
+  },
+  sportIcon: {
+    fontSize: 40,
+    marginRight: 15,
+  },
+  sportTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    flex: 1,
+  },
+  sportSubtitle: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.8)',
+    position: 'absolute',
+    left: 75,
+    bottom: 18,
+  },
+  chevron: {
+    marginLeft: 'auto',
+  },
+  quickLinksContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 30,
+  },
+  quickLinkButton: {
+    backgroundColor: 'white',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: '#e2e8f0',
+  },
+  quickLinkText: {
+    color: '#475569',
+    fontWeight: '600',
+  },
+  aboutSection: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 15,
+    marginTop: 10,
+  },
+  aboutTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1e293b',
+    marginBottom: 10,
+  },
+  aboutText: {
+    fontSize: 14,
+    color: '#64748b',
+    lineHeight: 22,
+    marginBottom: 10,
+  },
+});
