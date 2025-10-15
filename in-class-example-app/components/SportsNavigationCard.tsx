@@ -2,10 +2,18 @@ import { Link } from "expo-router";
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 
-const SportsNavigationCard = ({ href, icon, title, subtitle }) => {
+interface SportsNavigationCardProps {
+    href: string;
+    icon: string;
+    title: string;
+    subtitle: string;
+    color?: string;
+}
+
+const SportsNavigationCard = ({ href, icon, title, subtitle, color = '#059669' }: SportsNavigationCardProps) => {
     return (
         <Link href={href} asChild>
-            <Pressable style={[styles.sportCard, styles.discGolfCard]}>
+            <Pressable style={[styles.sportCard, { backgroundColor: color }]}>
                 <Text style={styles.sportIcon}>{icon}</Text>
                 <View style={styles.sportTextContainer}>
                     <Text style={styles.sportTitle}>{title}</Text>
@@ -34,9 +42,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: 'black',
         marginTop: 2,
-    },
-    discGolfCard: {
-        backgroundColor: '#059669',
     },
     sportCard: {
         padding: 20,
