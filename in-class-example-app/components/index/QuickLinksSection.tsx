@@ -13,6 +13,12 @@ const QuickLinksSection = () => {
           </Pressable>
         </Link>
 
+        <Link href="/swapi/swapi" asChild>
+          <Pressable style={styles.quickLinkButton}>
+            <Text style={styles.quickLinkText}>Star Wars API</Text>
+          </Pressable>
+        </Link>
+
         <Link href="/sf-symbols/sf" asChild>
           <Pressable style={styles.quickLinkButton}>
             <Text style={styles.quickLinkText}>📱 SF Symbols</Text>
