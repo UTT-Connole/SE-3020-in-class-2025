@@ -13,6 +13,25 @@ const QuickLinksSection = () => {
           </Pressable>
         </Link>
 
+        <Link href="/starwars/1" asChild>
+          <Pressable style={styles.quickLinkButton}>
+            <Text style={styles.quickLinkText}>🎵 Star Wars Episode 4</Text>
+          </Pressable>
+        </Link>
+
+
+        <Link href="/starwars/2" asChild>
+          <Pressable style={styles.quickLinkButton}>
+            <Text style={styles.quickLinkText}>🎵 Star Wars Episode 5</Text>
+          </Pressable>
+        </Link>
+
+        <Link href="/starwars/3" asChild>
+          <Pressable style={styles.quickLinkButton}>
+            <Text style={styles.quickLinkText}>🎵 Star Wars Episode 6</Text>
+          </Pressable>
+        </Link>
+
         <Link href="/sf-symbols/sf" asChild>
           <Pressable style={styles.quickLinkButton}>
             <Text style={styles.quickLinkText}>📱 SF Symbols</Text>
